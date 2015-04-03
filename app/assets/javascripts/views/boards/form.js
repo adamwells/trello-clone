@@ -3,11 +3,18 @@ TrelloClone.Views.BoardForm = Backbone.View.extend({
   tagName: 'form',
 
   events: {
-    'click button' : 'submitForm'
+    'submit' : 'submitForm'
   },
 
-  submitForm: function () {
-    var data = this.serializeJSON();
+  submitForm: function (event) {
+    event.preventDefault();
+    var data = this.$el.serializeJSON();
+    var board = new TrelloClone.Models.Board();
+    board.save(data, {
+      success: function () {
+        Backbone.history.navigate('boards/' + board.get('id'), { trigger: true });
+      }
+    });
   },
 
   render: function () {
