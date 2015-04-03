@@ -5,22 +5,23 @@ TrelloClone.Routers.Router = Backbone.Router.extend({
     "boards" : "boardsIndex",
     "boards/new" : "newBoard",
     "boards/:id" : "boardShow",
-    "boards/:id/edit" : "editBoard"
+    "boards/:id/edit" : "editBoard",
+    "boards/:boardId/lists/:id" : "listShow"
   },
 
   initialize: function (options) {
     this.$rootEl = options.$rootEl;
-    this.collection = new TrelloClone.Collections.Boards();
-    this.collection.fetch();
+    this.boards = new TrelloClone.Collections.Boards();
+    this.boards.fetch();
   },
 
   boardsIndex: function () {
-    var boardsIndex = new TrelloClone.Views.BoardsIndex({ collection: this.collection });
+    var boardsIndex = new TrelloClone.Views.BoardsIndex({ collection: this.boards });
     this._swapView(boardsIndex);
   },
 
   boardShow: function (id) {
-    var board = this.collection.getOrFetch(id);
+    var board = this.boards.getOrFetch(id);
     var boardShow = new TrelloClone.Views.BoardShow({ model: board});
     this._swapView(boardShow);
   },
@@ -36,8 +37,16 @@ TrelloClone.Routers.Router = Backbone.Router.extend({
   },
 
   editBoard: function (id) {
-    var board = this.collection.get(id);
+    var board = this.boards.get(id);
     this.boardForm(board);
+  },
+
+  listShow: function (boardId, id) {
+    var board = this.boards.getOrFetch(boardId, function() {
+      var list = board.lists().get(id);
+      var listShow = new TrelloClone.Views.ListShow({ model: list });
+      this._swapView(listShow);
+    }.bind(this));
   },
 
   _swapView: function (view) {
