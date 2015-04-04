@@ -17,6 +17,6 @@ class List < ActiveRecord::Base
   has_many :cards, dependent: :destroy
 
   default_scope { order(:ord) }
-
+  
   # TODO: class method for updating orders?
 end
