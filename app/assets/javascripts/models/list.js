@@ -1,8 +1,16 @@
 TrelloClone.Models.List = Backbone.Model.extend({
+  urlRoot: 'api/list',
+
   initialize: function(options) {
-    this.cardsOptions = options.cards;
-    this.cards();
-    this.parseCards();
+    this.prepareCards(options);
+  },
+
+  prepareCards: function (options) {
+    if (options && options.cards) {
+      this.cardsOptions = options.cards;
+      this.cards();
+      this.parseCards();
+    }
   },
 
   parseCards: function () {

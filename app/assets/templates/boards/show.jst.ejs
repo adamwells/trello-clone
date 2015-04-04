@@ -1,4 +1,7 @@
 <a href="#">Index</a>
 <h1><%= board.escape('title') %></h1>
+<p>
+  <a href="#/boards/<%= board.escape('id') %>/lists/new">Create new List</a>
+</p>
 <ul class="lists"></ul>
 <button class="btn btn-large btn-danger">Delete Board</button>
