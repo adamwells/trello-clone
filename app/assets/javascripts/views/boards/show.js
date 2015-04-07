@@ -12,13 +12,10 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
     this.listenTo(this.model, 'sync', this.render);
     this.listenTo(this.lists, 'sync', this.render);
     this.listenTo(this.lists, 'add', this.addlist);
-
-    this.addLists();
-    this.addListForm();
   },
 
   submitList: function (event) {
-    console.log(event.target);
+    event.preventDefault();
     this.model.fetch();
   },
 
@@ -47,7 +44,7 @@ TrelloClone.Views.BoardShow = Backbone.CompositeView.extend({
     var content = this.template({ board: this.model });
     this.$el.html(content);
     this.addLists();
-    this.attachSubviews();
+    this.addListForm();
     return this;
   }
 });

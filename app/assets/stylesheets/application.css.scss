@@ -27,3 +27,11 @@
   list-style-type: none;
   overflow: scroll;
 }
+
+.list .delete-list {
+  display: none;
+}
+
+.list:hover .delete-list {
+  display: block;
+}
