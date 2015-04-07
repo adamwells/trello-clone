@@ -3,6 +3,7 @@ module Api
     before_action :require_board_member!
 
     def create
+      puts "WE MADE IT TO HERE"
       @list = current_board.lists.new(list_params)
 
       if @list.save
